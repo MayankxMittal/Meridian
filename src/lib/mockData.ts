@@ -6,6 +6,11 @@ import type {
   ChartPoint,
   ActivityItem,
   DepartmentStat,
+  PersonalDetails,
+  BankDetails,
+  StatutoryDetails,
+  SalaryStructure,
+  EmployeeProfile,
 } from "./types";
 
 export function getEmployeeById(id: string): Employee | undefined {
