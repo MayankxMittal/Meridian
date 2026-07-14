@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+/* Premium self-hosted fonts */
+@import "@fontsource/fraunces/400.css";
+@import "@fontsource/fraunces/500.css";
+@import "@fontsource/fraunces/600-italic.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+@theme {
+  /* ===========================
+     DEFAULT (LIGHT) PALETTE
+     =========================== */
+
+  /* Brand */
+  --color-primary: #0f4c3a;
+  --color-primary-dark: #0a3428;
+  --color-primary-hover: #0a3428; /* alias of -dark, kept for naming parity with dark theme */
+  --color-primary-light: #16624c;
+  --color-primary-tint: #e8f0ec;
+
+  /* Surfaces */
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-hover: #f4f2ed;
+
+  /* Sidebar */
+  --color-sidebar: #f4f2ed;
+  --color-sidebar-hover: #eeece5;
+  --color-sidebar-active: #e8f0ec;
+
+  /* Ink & text */
+  --color-ink: #14161a;
+  --color-ink-secondary: #4b5157;
+  --color-ink-muted: #8a8f96;
+
+  /* Structural */
+  --color-border: #e7e5e0;
+  --color-border-strong: #d7d4cd;
+  --color-divider: #eeece7;
+
+  /* Status — muted, not neon */
+  --color-status-success: #1e7a4c;
+  --color-status-success-bg: #eaf5ee;
+  --color-status-warning: #a15c07;
+  --color-status-warning-bg: #fbf2e4;
+  --color-status-danger: #ad3c3c;
+  --color-status-danger-bg: #fbeeed;
+  --color-status-neutral: #5c6066;
+  --color-status-neutral-bg: #f0efec;
+
+  /* Premium effects */
+  --color-glass: rgba(20, 22, 26, 0.03);
+  --color-glow: rgba(15, 76, 58, 0.15);
+
+  /* ---- Typography ---- */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- Radius scale — consistent, never blob-y. Not theme-dependent. ---- */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* ---- Shadows — soft, tinted toward ink, not pure black ---- */
+  --shadow-xs: 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow-sm: 0 1px 3px rgba(20, 22, 26, 0.06), 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow-md: 0 4px 10px rgba(20, 22, 26, 0.06), 0 2px 4px rgba(20, 22, 26, 0.04);
+  --shadow-lg: 0 12px 24px rgba(20, 22, 26, 0.08), 0 4px 8px rgba(20, 22, 26, 0.04);
+  --shadow-glow-primary: 0 0 0 1px rgba(15, 76, 58, 0.08), 0 4px 16px rgba(15, 76, 58, 0.12);
+
+  /* ---- Easing ---- */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===========================
+   DARK THEME OVERRIDES
+   Plain CSS custom properties — NOT @theme.
+   @theme always compiles to :root regardless of nesting, so a second
+   @theme block can't be scoped to .dark; this is the correct pattern.
+   =========================== */
+.dark {
+  /* Brand */
+  --color-primary: #1d7a5a;
+  --color-primary-dark: #23946b;
+  --color-primary-hover: #23946b;
+  --color-primary-light: #2ba97b;
+  --color-primary-tint: #173b31;
+
+  /* Surfaces */
+  --color-bg: #0b0f0e;
+  --color-surface: #131917;
+  --color-surface-raised: #1a211e;
+  --color-surface-hover: #202825;
+
+  /* Sidebar */
+  --color-sidebar: #090c0b;
+  --color-sidebar-hover: #111816;
+  --color-sidebar-active: #173b31;
+
+  /* Ink & text */
+  --color-ink: #f5f6f7;
+  --color-ink-secondary: #c5cbc8;
+  --color-ink-muted: #8b9490;
+
+  /* Structural */
+  --color-border: #232d29;
+  --color-border-strong: #304039;
+  --color-divider: #1d2522;
+
+  /* Status */
+  --color-status-success: #30c47c;
+  --color-status-success-bg: rgba(48, 196, 124, 0.12);
+  --color-status-warning: #f5b74e;
+  --color-status-warning-bg: rgba(245, 183, 78, 0.12);
+  --color-status-danger: #ff6b6b;
+  --color-status-danger-bg: rgba(255, 107, 107, 0.12);
+  --color-status-neutral: #a4aba8;
+  --color-status-neutral-bg: rgba(255, 255, 255, 0.06);
+
+  /* Premium effects */
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glow: rgba(29, 122, 90, 0.35);
+
+  /* Shadows — dark backgrounds read fine with true-black shadows;
+     the "never pure black" brief rule was tuned for light surfaces. */
+  --shadow-xs: 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-glow-primary: 0 0 0 1px rgba(29, 122, 90, 0.18), 0 12px 40px rgba(29, 122, 90, 0.28);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.2s var(--ease-premium), color 0.2s var(--ease-premium);
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: var(--color-primary-tint);
+    color: var(--color-primary-dark);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-strong);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-muted);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-display-italic {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+  }
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes dropdown-out {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to { opacity: 0; transform: scale(0.96) translateY(-4px); }
+}
+
+[data-radix-popper-content-wrapper] [data-state="open"].animate-dropdown,
+.animate-dropdown[data-state="open"] {
+  animation: dropdown-in 140ms var(--ease-premium);
+}
+
+.animate-dropdown[data-state="closed"] {
+  animation: dropdown-out 100ms ease-in;
+}
