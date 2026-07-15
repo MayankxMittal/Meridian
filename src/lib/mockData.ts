@@ -42,12 +42,12 @@ export const EMPLOYEES: Employee[] = [
 
 
 export const PAYROLL_TREND: ChartPoint[] = [
-  { label: "Feb", value: 21200000 },
-  { label: "Mar", value: 21800000 },
+  { label: "Feb", value: 1200000 },
+  { label: "Mar", value: 13800000 },
   { label: "Apr", value: 22100000 },
-  { label: "May", value: 22600000 },
+  { label: "May", value: 11000000 },
   { label: "Jun", value: 23400000 },
-  { label: "Jul", value: 24850000 },
+  { label: "Jul", value: 28850000 },
 ];
 
 export const DEPARTMENT_BREAKDOWN: DepartmentStat[] = [

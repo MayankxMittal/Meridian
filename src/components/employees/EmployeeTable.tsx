@@ -274,15 +274,16 @@ export function EmployeeTable({ data, loading = false }: EmployeeTableProps) {
                     employeeId={row.original.id}
                     employeeName={row.original.name}
                   >
-                    <motion.tr
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                      className="group border-b border-divider transition-colors duration-100 last:border-0 hover:bg-bg data-[state=selected]:bg-primary-tint/40"
-                      data-state={row.getIsSelected() ? "selected" : undefined}
-                    >
+                  <motion.tr
+  layout
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  exit={{ opacity: 0 }}
+  transition={{ duration: 0.15 }}
+  className="group border-b border-divider transition-colors duration-100 last:border-0 hover:bg-bg data-[state=selected]:bg-primary-tint/40 cursor-pointer"
+  data-state={row.getIsSelected() ? "selected" : undefined}
+  onClick={() => navigate(`/employees/${row.original.id}`)}
+>
                       {row.getVisibleCells().map((cell) => (
                         <td key={cell.id} className="px-4 py-2.5">
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}

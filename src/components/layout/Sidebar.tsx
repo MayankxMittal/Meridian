@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/employees", label: "Employees", icon: Users, end: false },
   { to: "/payruns", label: "Payruns", icon: Wallet, end: false },
+  // { to: "/glCode", label: "GL Code Master", icon: Settings, end: false },
 ] as const;
 
 export function Sidebar() {
@@ -20,11 +21,13 @@ export function Sidebar() {
         <span className="font-display text-[17px] tracking-tight text-ink">
           Meridian
         </span> */}
-        <img src="/logo.png" alt="Meridian" className="" />
+        {/* <img src="/logo.png" alt="Meridian" className="" /> */}
+        <img src="https://interloop.in/wp-content/uploads/2024/08/Logo-NB-With-BLUE-ORANGE-scaled-e1746509254448.png" alt="Meridian" className="w-46" />
+
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 pt-2">
+      <nav className="flex-1 px-3 pt-7">
         <ul className="flex flex-col gap-0.5">
           {NAV_ITEMS.map((item) => (
             <li key={item.to}>

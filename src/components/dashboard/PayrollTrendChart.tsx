@@ -52,7 +52,9 @@ export function PayrollTrendChart() {
             >
               <defs>
                 <linearGradient id="payrollFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#0F4C3A" stopOpacity={0.16} />
+                  <stop offset="0%" stopColor="#0F4C3A" stopOpacity={0.38} />
+                  <stop offset="18%" stopColor="#0F4C3A" stopOpacity={0.22} />
+                  <stop offset="55%" stopColor="#0F4C3A" stopOpacity={0.05} />
                   <stop offset="100%" stopColor="#0F4C3A" stopOpacity={0} />
                 </linearGradient>
               </defs>
@@ -79,9 +81,11 @@ export function PayrollTrendChart() {
               <Area
                 type="monotone"
                 dataKey="value"
-                stroke="#0F4C3A"
+                stroke="#11A262"
                 strokeWidth={2}
                 fill="url(#payrollFill)"
+                // style={{ filter: "drop-shadow(0 2px 6px rgba(15, 76, 58, 0.35))" }}
+                style={{ filter: "drop-shadow(0 6px 20px rgba(12, 36, 27, 0.5))" }}
                 activeDot={{ r: 4, fill: "#0F4C3A", strokeWidth: 2, stroke: "#fff" }}
               />
             </AreaChart>
