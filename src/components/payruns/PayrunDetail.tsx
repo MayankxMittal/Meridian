@@ -6,12 +6,63 @@ import { PayrunStatusBadge } from './PayrunStatusBadge';
 import { EmptyState } from '@/components/employees/EmptyState';
 import { PAYRUNS, getPayrunLineItems } from '@/lib/mockData';
 import { formatCurrency, formatDate } from '@/lib/utils';
+import { PayrunEmployeeDrawer, type PayrunEmployeeDrawerData } from './PayrunEmployeeDrawer';
+import { PayrunSummary, type PayrunSummaryData } from './PayrunSummary';
+import { useState } from 'react';
+import type { Payrun, PayrunLineItem } from '@/lib/types';
 
 const EASE_PREMIUM: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+function getDrawerData(item: PayrunLineItem, payrun: Payrun): PayrunEmployeeDrawerData {
+  const basic = Math.round(item.gross * 0.5);
+  const hra = Math.round(item.gross * 0.25);
+  const epf = Math.round(item.deductions * 0.6);
+  const incomeTax = Math.round(item.deductions * 0.35);
+
+  return {
+    overview: {
+      name: item.employeeName,
+      employeeCode: item.employeeId,
+      department: '—',
+      designation: item.role,
+      payrollMonth: payrun.period,
+      status: payrun.status === 'paid' ? 'paid' : 'pending',
+    },
+    salary: {
+      annualCTC: item.gross * 12,
+      monthlyCTC: item.gross,
+      grossSalary: item.gross,
+      netSalary: item.net,
+      paymentDate: payrun.runDate,
+    },
+    earnings: {
+      basic,
+      hra,
+      specialAllowance: item.gross - basic - hra,
+      bonus: 0,
+      overtime: 0,
+      reimbursements: 0,
+    },
+    deductions: {
+      epf,
+      esi: 0,
+      professionalTax: item.deductions - epf - incomeTax,
+      incomeTax,
+      lwf: 0,
+      loanAdvance: 0,
+      otherDeductions: 0,
+    },
+    employerContributions: { employerEpf: epf, employerEsi: 0 },
+    attendance: { workingDays: 22, presentDays: 22, paidLeave: 0, lossOfPay: 0 },
+  };
+}
 
 export function PayrunDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [selected, setSelected] = useState<PayrunEmployeeDrawerData | null>(null);
+
+
 
   const payrun = PAYRUNS.find((p) => p.id === id);
 
@@ -26,8 +77,47 @@ export function PayrunDetail() {
 
   const lineItems = getPayrunLineItems(payrun.id);
 
+  const summary: PayrunSummaryData = {
+    totalEmployees: payrun.employeesCount,
+    totalPayrollCost: payrun.totalAmount,
+    totalNetSalaryPaid: lineItems.reduce((sum, item) => sum + item.net, 0),
+    totalDeductions: lineItems.reduce((sum, item) => sum + item.deductions, 0),
+    totalEmployerContribution: Math.round(
+      lineItems.reduce((sum, item) => sum + item.deductions, 0) * 0.6,
+    ),
+    averageSalary: payrun.totalAmount / payrun.employeesCount,
+    distribution: (() => {
+      const totalNetSalary = lineItems.reduce((sum, item) => sum + item.net, 0);
+      const totalDeductions = lineItems.reduce((sum, item) => sum + item.deductions, 0);
+      const epf = Math.round(totalDeductions * 0.6);
+      const incomeTax = Math.round(totalDeductions * 0.35);
+
+      return [
+        { label: 'Net Salary', amount: totalNetSalary },
+        { label: 'EPF', amount: epf },
+        { label: 'ESI', amount: 0 },
+        { label: 'Income Tax (TDS)', amount: incomeTax },
+        { label: 'Other Deductions', amount: totalDeductions - epf - incomeTax },
+      ];
+    })(),
+    paymentStatus: {
+      paid: payrun.status === 'paid' ? payrun.employeesCount : 0,
+      pending: payrun.status === 'paid' ? 0 : payrun.employeesCount,
+      onHold: 0,
+      failed: 0,
+    },
+  };
+
   return (
     <div className="space-y-6">
+      <PayrunEmployeeDrawer
+        data={selected}
+        open={Boolean(selected)}
+        onClose={() => setSelected(null)}
+      />
+
+
+
       <button
         onClick={() => navigate('/payruns')}
         className="inline-flex items-center gap-1.5 text-sm text-ink-secondary transition-colors hover:text-ink"
@@ -81,11 +171,12 @@ export function PayrunDetail() {
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: index * 0.03, ease: EASE_PREMIUM }}
-                    className="border-b border-divider last:border-0 hover:bg-primary-tint/30"
+                    onClick={() => setSelected(getDrawerData(item, payrun))}
+                    className="cursor-pointer border-b border-divider last:border-0 hover:bg-primary-tint/30"
                   >
                     <td className="px-6 py-3.5 font-medium text-ink">{item.employeeName}</td>
                     <td className="px-6 py-3.5 text-ink-secondary">{item.role}</td>
-                    <td className="tabular-nums px-6 py-3.5 text-right font-mono">
+                    <td className="tabular-nums px-6 py-3.5 text-right font-mono text-ink-secondary">
                       {formatCurrency(item.gross)}
                     </td>
                     <td className="tabular-nums px-6 py-3.5 text-right font-mono text-ink-secondary">
@@ -101,6 +192,13 @@ export function PayrunDetail() {
           </div>
         </CardContent>
       </Card>
+
+      <PayrunSummary
+        data={summary}
+        onGeneratePayroll={() => {/* regenerate */ }}
+        onDownloadPayslips={() => {/* bulk download */ }}
+        onExportReport={(format) => { void format; }}
+      />
     </div>
   );
 }

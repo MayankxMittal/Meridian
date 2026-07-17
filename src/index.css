@@ -16,7 +16,7 @@
   /* Brand */
   --color-primary: #0f4c3a;
   --color-primary-dark: #0a3428;
-  --color-primary-hover: #0a3428; /* alias of -dark, kept for naming parity with dark theme */
+  --color-primary-hover: #0a3428;
   --color-primary-light: #16624c;
   --color-primary-tint: #e8f0ec;
 
@@ -75,13 +75,39 @@
 
   /* ---- Easing ---- */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Payrun Drawer specific tokens (light) ---- */
+  --surface-background: #ffffff;
+  --surface-card: #f8f9fa;
+  --surface-hover: #f1f3f5;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #8a8a8a;
+  --drawer-shadow: -24px 0 60px -12px rgba(0,0,0,0.15);
+  
+  /* Status colors for drawer */
+  --status-paid: #10b981;
+  --status-paid-soft: rgba(16, 185, 129, 0.12);
+  --status-pending: #f59e0b;
+  --status-pending-soft: rgba(245, 158, 11, 0.12);
+  --status-hold: #ef4444;
+  --status-hold-soft: rgba(239, 68, 68, 0.12);
+  
+  /* Accent colors for drawer */
+  --accent: #0d9488;
+  --accent-text: #ffffff;
+  
+  /* Gold colors for drawer */
+  --gold: #b8952e;
+  --gold-soft: rgba(184, 149, 46, 0.08);
+  --gold-border: rgba(184, 149, 46, 0.25);
+
+  /* ---- Button text inverse ---- */
+  --button-text-inverse: #ffffff;
 }
 
 /* ===========================
    DARK THEME OVERRIDES
-   Plain CSS custom properties — NOT @theme.
-   @theme always compiles to :root regardless of nesting, so a second
-   @theme block can't be scoped to .dark; this is the correct pattern.
    =========================== */
 .dark {
   /* Brand */
@@ -126,99 +152,39 @@
   --color-glass: rgba(255, 255, 255, 0.04);
   --color-glow: rgba(29, 122, 90, 0.35);
 
-  /* Shadows — dark backgrounds read fine with true-black shadows;
-     the "never pure black" brief rule was tuned for light surfaces. */
+  /* Shadows */
   --shadow-xs: 0 2px 4px rgba(0, 0, 0, 0.25);
   --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.28);
   --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.45);
   --shadow-glow-primary: 0 0 0 1px rgba(29, 122, 90, 0.18), 0 12px 40px rgba(29, 122, 90, 0.28);
-}
 
-@layer base {
-  * {
-    border-color: var(--color-border);
-  }
+  /* ---- Payrun Drawer specific tokens (dark) ---- */
+  --surface-background: #131917;
+  --surface-card: #1a221d;
+  --surface-hover: #1f2823;
+  --text-primary: #e8edeb;
+  --text-secondary: #a0b0a8;
+  --text-muted: #6a7a72;
+  --drawer-shadow: -24px 0 60px -12px rgba(0,0,0,0.6);
+  
+  /* Status colors for drawer - adjusted for dark */
+  --status-paid: #34d8a6;
+  --status-paid-soft: rgba(52, 216, 166, 0.12);
+  --status-pending: #f0b341;
+  --status-pending-soft: rgba(240, 179, 65, 0.12);
+  --status-hold: #f2617a;
+  --status-hold-soft: rgba(242, 97, 122, 0.12);
+  
+  /* Accent colors for drawer - adjusted for dark */
+  --accent: #34d8a6;
+  --accent-text: #06231b;
+  
+  /* Gold colors for drawer - adjusted for dark */
+  --gold: #e8b76a;
+  --gold-soft: rgba(232, 183, 106, 0.10);
+  --gold-border: rgba(232, 183, 106, 0.30);
 
-  html {
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  body {
-    background-color: var(--color-bg);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    transition: background-color 0.2s var(--ease-premium), color 0.2s var(--ease-premium);
-  }
-
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
-  }
-
-  ::selection {
-    background-color: var(--color-primary-tint);
-    color: var(--color-primary-dark);
-  }
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-border-strong);
-    border-radius: 999px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-ink-muted);
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-}
-
-@layer utilities {
-  .font-display {
-    font-family: var(--font-display);
-  }
-  .font-display-italic {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 600;
-  }
-}
-
-@keyframes dropdown-in {
-  from { opacity: 0; transform: scale(0.96) translateY(-4px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-@keyframes dropdown-out {
-  from { opacity: 1; transform: scale(1) translateY(0); }
-  to { opacity: 0; transform: scale(0.96) translateY(-4px); }
-}
-
-[data-radix-popper-content-wrapper] [data-state="open"].animate-dropdown,
-.animate-dropdown[data-state="open"] {
-  animation: dropdown-in 140ms var(--ease-premium);
-}
-
-.animate-dropdown[data-state="closed"] {
-  animation: dropdown-out 100ms ease-in;
+  /* ---- Button text inverse ---- */
+  --button-text-inverse: #06231b;
 }
