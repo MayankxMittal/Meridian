@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Command } from "cmdk";
 import { AnimatePresence, motion } from "framer-motion";
-import { LayoutDashboard, Users, Wallet, Search } from "lucide-react";
+import { LayoutDashboard, Users, Wallet, Search, Settings } from "lucide-react";
 
 interface CommandPaletteProps {
   open: boolean;
@@ -13,6 +13,7 @@ const PAGES = [
   { label: "Dashboard", to: "/", icon: LayoutDashboard },
   { label: "Employees", to: "/employees", icon: Users },
   { label: "Payruns", to: "/payruns", icon: Wallet },
+  { label: "Settings", to: "/settings", icon: Settings },
 ];
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {

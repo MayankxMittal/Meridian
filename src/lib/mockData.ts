@@ -11,6 +11,7 @@ import type {
   StatutoryDetails,
   SalaryStructure,
   EmployeeProfile,
+  Department,
 } from "./types";
 
 export function getEmployeeById(id: string): Employee | undefined {
@@ -39,16 +40,15 @@ export const EMPLOYEES: Employee[] = [
 ];
 
 
-
-
 export const PAYROLL_TREND: ChartPoint[] = [
-  { label: "Feb", value: 1200000 },
-  { label: "Mar", value: 13800000 },
+  { label: "Feb", value: 21200000 },
+  { label: "Mar", value: 21800000 },
   { label: "Apr", value: 22100000 },
-  { label: "May", value: 11000000 },
+  { label: "May", value: 22600000 },
   { label: "Jun", value: 23400000 },
-  { label: "Jul", value: 28850000 },
+  { label: "Jul", value: 24850000 },
 ];
+
 
 export const DEPARTMENT_BREAKDOWN: DepartmentStat[] = [
   { department: "Engineering", headcount: 78, percentOfTotal: 42 },
@@ -59,6 +59,11 @@ export const DEPARTMENT_BREAKDOWN: DepartmentStat[] = [
   { department: "HR", headcount: 13, percentOfTotal: 7 },
   { department: "Support", headcount: 18, percentOfTotal: 9 },
 ];
+
+
+
+
+
 
 export const ACTIVITY_FEED: ActivityItem[] = [
   { id: "ACT-01", type: "payrun-processed", actor: "System", description: "July payrun processed for 186 employees", timestamp: "2026-07-14T09:12:00" },
@@ -212,3 +217,18 @@ export function getEmployeeProfile(id: string): EmployeeProfile | undefined {
     salaryStructure: generateSalaryStructure(emp),
   };
 }
+
+
+
+
+
+export const INITIAL_DEPARTMENTS: Department[] = [
+  { id: "DEPT-01", name: "Engineering", code: "ENG", description: "Product engineering, platform, and infrastructure teams.", headCount: 78, createdAt: "2020-01-15" },
+  { id: "DEPT-02", name: "Sales", code: "SAL", description: "New business, account management, and partnerships.", headCount: 26, createdAt: "2020-01-15" },
+  { id: "DEPT-03", name: "Marketing", code: "MKT", description: "Brand, growth, and content marketing.", headCount: 20, createdAt: "2020-03-02" },
+  { id: "DEPT-04", name: "Design", code: "DSG", description: "Product design and brand design.", headCount: 16, createdAt: "2020-04-10" },
+  { id: "DEPT-05", name: "Finance", code: "FIN", description: "Accounting, treasury, and financial planning.", headCount: 15, createdAt: "2020-01-15" },
+  { id: "DEPT-06", name: "HR", code: "HR", description: "People operations, recruiting, and culture.", headCount: 13, createdAt: "2020-01-15" },
+  { id: "DEPT-07", name: "Support", code: "SUP", description: "Customer success and technical support.", headCount: 18, createdAt: "2021-06-20" },
+  { id: "DEPT-08", name: "Product", code: "PRD", description: "Product management and strategy.", headCount: 12, createdAt: "2021-02-11" },
+];

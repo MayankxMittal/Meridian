@@ -5,6 +5,7 @@ import { EmployeesPage } from "@/pages/EmployeesPage";
 import { PayrunsPage } from "@/pages/PayrunsPage";
 import { PayrunDetail } from "@/components/payruns/PayrunDetail";
 import { EmployeeProfile } from "@/components/employees/EmployeeProfile";
+import Settings from "./pages/Settings";
 // ...
 
 export const router = createBrowserRouter([
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
       { path: "employees/:empid", element: <EmployeeProfile /> },
       { path: "payruns", element: <PayrunsPage /> },
       { path: "/payruns/:id", element: <PayrunDetail /> },
+      { path: "settings", element: <Settings /> },
     ],
   },
 ]);

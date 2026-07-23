@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { LayoutDashboard, Users, Wallet, ChevronsUpDown } from "lucide-react";
+import { LayoutDashboard, Users, Wallet, ChevronsUpDown, Settings } from "lucide-react";
 import { cn, getInitials } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/employees", label: "Employees", icon: Users, end: false },
   { to: "/payruns", label: "Payruns", icon: Wallet, end: false },
-  // { to: "/glCode", label: "GL Code Master", icon: Settings, end: false },
+  { to: "/settings", label: "Settings", icon: Settings, end: false },
 ] as const;
 
 export function Sidebar() {

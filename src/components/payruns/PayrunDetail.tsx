@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { Card, CardTitle, CardContent } from '@/components/ui/Card';
 import { PayrunStatusBadge } from './PayrunStatusBadge';
 import { EmptyState } from '@/components/employees/EmptyState';
 import { PAYRUNS, getPayrunLineItems } from '@/lib/mockData';
@@ -9,6 +9,8 @@ import { formatCurrency, formatDate } from '@/lib/utils';
 import { PayrunEmployeeDrawer, type PayrunEmployeeDrawerData } from './PayrunEmployeeDrawer';
 import { PayrunSummary, type PayrunSummaryData } from './PayrunSummary';
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import type { Payrun, PayrunLineItem } from '@/lib/types';
 
 const EASE_PREMIUM: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -61,6 +63,7 @@ export function PayrunDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [selected, setSelected] = useState<PayrunEmployeeDrawerData | null>(null);
+  const [isLineItemsOpen, setIsLineItemsOpen] = useState(true);
 
 
 
@@ -148,11 +151,43 @@ export function PayrunDetail() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Line items</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
+      <PayrunSummary
+        data={summary}
+        onGeneratePayroll={() => {/* regenerate */ }}
+        onDownloadPayslips={() => {/* bulk download */ }}
+        onExportReport={(format) => { void format; }}
+      />
+
+    <Card>
+  <button
+    onClick={() => setIsLineItemsOpen((prev) => !prev)}
+    className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-primary-tint/20"
+  >
+    <div className="flex items-center gap-3">
+      <CardTitle>Line items</CardTitle>
+      <span className="tabular-nums rounded-full bg-primary-tint/40 px-2.5 py-0.5 font-mono text-xs font-medium text-ink-secondary">
+        {lineItems.length}
+      </span>
+    </div>
+    <motion.div
+      animate={{ rotate: isLineItemsOpen ? 180 : 0 }}
+      transition={{ duration: 0.3, ease: EASE_PREMIUM }}
+    >
+      <ChevronDown className="h-4 w-4 text-ink-secondary" />
+    </motion.div>
+  </button>
+
+  <AnimatePresence initial={false}>
+    {isLineItemsOpen && (
+      <motion.div
+        key="line-items-content"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: 'auto', opacity: 1 }}
+        exit={{ height: 0, opacity: 0 }}
+        transition={{ duration: 0.35, ease: EASE_PREMIUM }}
+        className="overflow-hidden"
+      >
+        <CardContent className="border-t border-divider p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -191,14 +226,12 @@ export function PayrunDetail() {
             </table>
           </div>
         </CardContent>
-      </Card>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</Card>
 
-      <PayrunSummary
-        data={summary}
-        onGeneratePayroll={() => {/* regenerate */ }}
-        onDownloadPayslips={() => {/* bulk download */ }}
-        onExportReport={(format) => { void format; }}
-      />
+      
     </div>
   );
 }

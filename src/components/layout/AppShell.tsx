@@ -19,6 +19,10 @@ const PAGE_META: Record<string, { title: string; subtitle: string }> = {
     title: "Payruns",
     subtitle: "Track and process payroll",
   },
+  "/settings": {
+    title: "Settings",
+    subtitle: "Configure application settings",
+  },
 };
 
 export function AppShell() {
